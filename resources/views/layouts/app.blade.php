@@ -13,16 +13,28 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Otras etiquetas meta, títulos, etc. -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <div id="app" class="d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'secureDocSign') }}
                 </a>
+
+                @guest
+                @else
+                    <a class="navbar-brand" href="{{ url('/documentos') }}">
+                        Mis Documentos
+                    </a>
+                @endguest
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -75,6 +87,15 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="footer mt-auto">
+            <div class="container">
+                <p class="mb-0">© 2024 secureDocSign. Todos los Derechos Reservados. By Crissoft</p>
+            </div>
+        </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

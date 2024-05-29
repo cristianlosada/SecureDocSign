@@ -5,6 +5,7 @@
 /public/storage
 /storage/documentos/
 /storage/*.key
+/storage/*.pem
 /vendor
 .env
 .env.backup

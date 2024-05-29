@@ -6,3 +6,112 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+/* Estilos personalizados */
+body {
+  background-color: #f4f6f9;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card-header {
+  background: linear-gradient(45deg, #007bff, #6610f2);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card-header-bg-success {
+  background: linear-gradient(45deg, #14fd75, #10aef2) !important;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card-header-bg-danger {
+  background: linear-gradient(45deg, #ff0d00, #ffd500) !important;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card-footer {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.btn-block {
+  padding: 15px;
+  font-size: 18px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  background-color: #f4f6f9;
+  font-family: 'Nunito', sans-serif;
+}
+
+.navbar {
+  background: linear-gradient(45deg, #007bff, #6610f2);
+  border-bottom: 3px solid #5a5a5a;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #fff !important;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #d1d1d1 !important;
+}
+
+.dropdown-menu {
+  background-color: #6610f2;
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu .dropdown-item {
+  color: #fff !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #5a5a5a !important;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main {
+  padding-top: 4rem;
+}
+
+.footer {
+  background-color: #007bff;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
