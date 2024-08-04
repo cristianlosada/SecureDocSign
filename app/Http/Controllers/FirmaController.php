@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use phpseclib3\Crypt\RSA;
+use phpseclib3\File\X509;
 use setasign\Fpdi\Fpdi;
+// use setasign\Fpdi\Tcpdf\Fpdi;
 use TCPDF;
 
 class FirmaController extends Controller
@@ -72,33 +74,39 @@ class FirmaController extends Controller
             $nombre = explode('/', $documento->path)[2];
             
             // Ruta de salida para el archivo firmado
-            $outputPath = storage_path('app/public/documentos_firmados/' . $nombre);
+            $outputPath = storage_path('app/public/documentos/' . $nombre);
+
+            // $privateKey = Storage::get('private_key.pem'); // Obtener la clave privada desde el almacenamiento
+            // $publicKey = Storage::get('public_key.pem'); // Obtener la clave publica desde el almacenamiento
+
+            // Leer las claves y el certificado desde el almacenamiento
+            $privateKey = Storage::get('private_key.pem');
+            $certificate = Storage::get('certificate.pem');
+            Log::error($privateKey);
     
             // Crear una instancia de FPDI
             $pdf = new Fpdi();
             $pageCount = $pdf->setSourceFile($filePath);
-
-            $privateKey = Storage::get('private_key.pem'); // Obtener la clave privada desde el almacenamiento
-            Log::error($privateKey);
-            $publicKey = Storage::get('public_key.pem'); // Obtener la clave publica desde el almacenamiento
     
             // Iterar sobre cada página del PDF
             for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
                 // Importar la página del PDF original
                 $templateId = $pdf->importPage($pageNo);
                 $size = $pdf->getTemplateSize($templateId);
-    
-                // Agregar una nueva página al PDF firmado
+
+                // Agregar una nueva página al PDF firmado usando la página original
                 $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
-                $pdf->useTemplate($templateId);
-    
-                // Agregar la firma digital en la última página
-                if ($pageNo == $pageCount) {
-                    $pdf->SetFont('Helvetica', '', 12);
-                    $pdf->SetXY(10, $size['height'] - 20);
-                    $pdf->Write(8, 'Hash: ' . $documento->hash);
-                }
+                $pdf->useTemplate($templateId, 0, 0, $size['width'], $size['height'], true);
+
+                // Agregar la firma digital al inicio de cada página
+                $pdf->SetFont('Helvetica', '', 12);
+                $pdf->SetXY(10, $size['height'] - 25);
+                $pdf->Write(4, 'hash: '. $documento->hash);
             }
+
+            // Agregar la firma digital al PDF
+            // $pdf->setSignature($certificate, $privateKey, '', '', 2, [], 'A');
+        
     
             // Guardar el PDF firmado
             $pdf->Output($outputPath, 'F');
@@ -114,7 +122,7 @@ class FirmaController extends Controller
             // $pdf->Output($outputPath, 'F');
     
             // Actualizar el path del documento firmado en la base de datos
-            $documento->path = 'public/documentos_firmados/' . $nombre;
+            $documento->path = 'public/documentos/' . $nombre;
             $documento->save();
         } catch (\Exception $e) {
             Log::error('Error al agregar la firma al PDF: ' . $e->getMessage());

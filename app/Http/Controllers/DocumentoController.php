@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\Firma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -98,10 +99,15 @@ class DocumentoController extends Controller
 
         $documento->nombre = $request->nombre;
 
+        $firma = Firma::where('documento_id', $documento->id)->first();
+        $firma->delete();
+
         if ($request->hasFile('file')) {
             Storage::delete($documento->path);
-            $filePath = $request->file('file')->store('documentos');
+            // Guardar el archivo en el almacenamiento local
+            $filePath = $request->file('file')->store('public/documentos');
             $documento->path = $filePath;
+            $documento->estado = 'subido';
             $documento->hash = hash_file('sha256', $request->file('file'));
         }
 
