@@ -17,7 +17,7 @@ Sigue estos pasos para instalar y configurar el proyecto:
 1. **Clona el repositorio:**
 
     ```sh
-    git clone https://github.com/tu_usuario/tu_proyecto.git
+    git clone https://github.com/cristianlosada/SecureDocSign.git
     cd tu_proyecto
     ```
 
@@ -43,6 +43,11 @@ Sigue estos pasos para instalar y configurar el proyecto:
     ```sh
     php artisan migrate
     ```
+6. **Instalar dependencias de node.js**
+
+  ```sh
+  npm install
+  ```
 
 ## Levantar el Backend
 
@@ -50,3 +55,12 @@ Para levantar el backend de la aplicación, utiliza el siguiente comando:
 
 ```sh
 php artisan serve
+```
+
+## Levantar el Frontend
+
+Para levantar el frontend de la aplicación, utiliza el siguiente comando:
+
+```sh
+npm run dev
+```
